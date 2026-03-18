@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Main {
     public static boolean existaStudentInLista(List<Student> lista, Integer numarMatricol, String prenume, String nume, String formatieDeStudiu) {
@@ -38,6 +40,16 @@ public class Main {
         }
         else{
             System.out.println("Maria nu se afla in lista studentilor.");
+        }
+
+        Set<Student> studentSet = new HashSet<>(studentList);
+        Student studentCautat = new Student(120, "", "", "");
+
+        if(studentSet.contains(studentCautat)){
+            System.out.println("Studentul cu numarul matricol 120 exista.");
+        }
+        else{
+            System.out.println("Studentul cu numarul matricol 120 nu exista.");
         }
 
     }
