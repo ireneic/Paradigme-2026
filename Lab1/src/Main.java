@@ -1,7 +1,8 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class Main {
     public static boolean existaStudentInLista(List<Student> lista, Integer numarMatricol, String prenume, String nume, String formatieDeStudiu) {
@@ -13,6 +14,30 @@ public class Main {
                 return true;
             }
         return false;
+    }
+    public static List<Student> citireFisier(String cale) throws IOException {
+        List<Student> studentiCititi = new ArrayList<>();
+        Path path = Paths.get(cale);
+
+        try {
+            List<String> linii = Files.readAllLines(path);
+
+            for(String l : linii) {
+                if (l.trim().isEmpty()) continue;
+                String[] parts = l.split(",");
+                if(parts.length == 4) {
+                    Integer numarMatricol = Integer.parseInt(parts[0].trim());
+                    String prenume = parts[1].trim();
+                    String nume = parts[2].trim();
+                    String formatieDeStudiu = parts[3].trim();
+
+                    studentiCititi.add(new Student(numarMatricol, prenume, nume, formatieDeStudiu));
+                }
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+        return studentiCititi;
     }
     public static void main(String[] args) {
         Student student = new Student(10, "Andreea", "Costeiu", "Calculatoare");
@@ -51,6 +76,27 @@ public class Main {
         else{
             System.out.println("Studentul cu numarul matricol 120 nu exista.");
         }
+
+
+        System.out.println("____LAB 3 - 3.5.2____");
+        try {
+            List<Student> studentiFisier = citireFisier("studenti_in.txt");
+            for(Student s : studentiFisier){
+                System.out.println(s);
+            }
+            studentiFisier.sort(Comparator.comparing(Student::getNume));
+            List<String> liniiScriere = new ArrayList<>();
+            for(Student s : studentiFisier){
+                liniiScriere.add(s.getNumarMatricol() + "," + s.getPrenume() + "," + s.getNume() + "," + s.getFormatieDeStudiu());
+
+            }
+            Files.write(Paths.get("studenti_out.txt"), liniiScriere);
+            System.out.println("\nLista sortata a fost salvata in studenti_out.txt");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 }
