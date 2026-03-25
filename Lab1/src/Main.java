@@ -93,9 +93,20 @@ public class Main {
             Files.write(Paths.get("studenti_out.txt"), liniiScriere);
             System.out.println("\nLista sortata a fost salvata in studenti_out.txt");
 
+            System.out.println("\n ____3.5.3____");
+            studentiFisier.sort(Comparator.comparing(Student::getFormatieDeStudiu).thenComparing(Student::getNume));
+            List<String> liniiScriere2 = new ArrayList<>();
+            for(Student s : studentiFisier) {
+                liniiScriere2.add(s.getNumarMatricol() + "," + s.getPrenume() + "," + s.getNume() + "," + s.getFormatieDeStudiu());
+            }
+            Files.write(Paths.get("studenti_out_sorted.txt"), liniiScriere2);
+            System.out.println("Lista sortata dupa formatie si nume a fost salvata in studenti_out_sorted.txt\n");
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
 
 
     }
