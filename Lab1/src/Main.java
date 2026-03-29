@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -5,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Main {
+    /*
     public static boolean existaStudentInLista(List<Student> lista, Integer numarMatricol, String prenume, String nume, String formatieDeStudiu) {
         for (Student s : lista)
             if (s.getNumarMatricol().equals(numarMatricol) &&
@@ -15,6 +17,9 @@ public class Main {
             }
         return false;
     }
+
+     */
+    /*
     public static List<Student> citireFisier(String cale) throws IOException {
         List<Student> studentiCititi = new ArrayList<>();
         Path path = Paths.get(cale);
@@ -39,7 +44,10 @@ public class Main {
         }
         return studentiCititi;
     }
-    public static void main(String[] args) {
+
+     */
+    public static void main(String[] args) throws IOException {
+        /*
         Student student = new Student(10, "Andreea", "Costeiu", "Calculatoare");
         System.out.println(student);
 
@@ -52,13 +60,17 @@ public class Main {
             System.out.println(s);
         }
 
+         */
+
+        /*
         boolean existaAlis = existaStudentInLista(studentList, 120, "Alis", "Popa", "TI21/1");
         //System.out.println("Exista in lista studenta Alis?" + existaAlis);
         if (existaAlis) {System.out.println("Studenta Alis a fost gasita in lista.");}
         else{System.out.println("Studenta Alis nu se afla in lista studentilor.");}
 
+         */
 
-        boolean existaMaria = existaStudentInLista(studentList, 112, "Maria", "Popa", "TI21/1");
+        /*boolean existaMaria = existaStudentInLista(studentList, 112, "Maria", "Popa", "TI21/1");
         //System.out.println("Exista Maria?" + existaMaria);
         if (existaMaria) {
             System.out.println("Studenta Maria se gaseste in lista.");
@@ -76,9 +88,9 @@ public class Main {
         else{
             System.out.println("Studentul cu numarul matricol 120 nu exista.");
         }
+        */
 
-
-        System.out.println("____LAB 3 - 3.5.2____");
+        /* System.out.println("\n____LAB 3 - 3.5.2____");
         try {
             List<Student> studentiFisier = citireFisier("studenti_in.txt");
             for(Student s : studentiFisier){
@@ -108,6 +120,37 @@ public class Main {
         }
 
 
+        */
+
+        System.out.println("-------Laborator 4 - 4.5.2--------");
+        Path path = Paths.get("studenti_in.txt");
+        Map<Integer, Student> studentMap = new HashMap<>();
+
+        for(String line : Files.readAllLines(path)){
+            String[] parts = line.split(",");
+            int numarMatricol = Integer.parseInt(parts[0].trim());
+            String prenume = parts[1].trim();
+            String nume = parts[2].trim();
+            String formatieDeStudiu = parts[3].trim();
+
+            Student s = new Student(numarMatricol, prenume, nume, formatieDeStudiu);
+            studentMap.put(numarMatricol, s);
+        }
+
+        Path pathNote = Paths.get("note_anon.txt");
+        for (String line : Files.readAllLines(pathNote)) {
+            String[] parts = line.split(",");
+            int numarMatricol = Integer.parseInt(parts[0].trim());
+            double nota = Double.parseDouble(parts[1].trim());
+
+            Student s = studentMap.get(numarMatricol);
+            if (s != null) {
+                s.setNota(nota);
+            }
+        }
+        for (Student s : studentMap.values()) {
+            System.out.println(s);
+        }
 
     }
 }
