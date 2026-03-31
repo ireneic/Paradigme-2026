@@ -46,6 +46,15 @@ public class Main {
     }
 
      */
+    public static double gasesteNota(String prenume, String nume, Map<String, Student> notaStudent ){
+        String key = prenume + "-" + nume;
+        if (notaStudent.containsKey(key)) {
+            return notaStudent.get(key).getNota();
+        }
+
+        return 0.0;
+
+    }
     public static void main(String[] args) throws IOException {
         /*
         Student student = new Student(10, "Andreea", "Costeiu", "Calculatoare");
@@ -151,6 +160,16 @@ public class Main {
         for (Student s : studentMap.values()) {
             System.out.println(s);
         }
+        Map<String, Student> notaStudent = new HashMap<>();
+        for (Student s : studentMap.values()) {
+            String key = s.getPrenume() + "-" + s.getNume();
+            notaStudent.put(key, s);
+        }
+        double notaM = gasesteNota("Bianca", "Popescu", notaStudent);
+        double notaN = gasesteNota("Ioan", "Popa", notaStudent);
+        System.out.println("\nTema - 4.5.3\n");
+        System.out.println("Prima nota returnata:" + notaM);
+        System.out.println("A doua nota returnata: " +notaN);
 
     }
 }

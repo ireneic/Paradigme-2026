@@ -34,6 +34,10 @@ public class Student {
         this.nota = nota;
     }
 
+    public Double getNota() {
+        return nota;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
